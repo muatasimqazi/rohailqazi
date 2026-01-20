@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <title>Rohail’s Aqeeqah – Thank You</title>
+
+   <style>
+  :root {
+    /* Dark background stays */
+    --bg1: #050a14;
+    --bg2: #071224;
+
+    /* Card is white */
+    --card: #ffffff;
+    --cardBorder: rgba(143, 191, 230, 0.35);
+    --gold: #caa44b;
+    --shadow: rgba(0, 0, 0, 0.55);
+
+    /* Text colors INSIDE the white card */
+    --cardText: #132a4a;          /* navy text */
+    --cardMuted: rgba(19, 42, 74, 0.75);
+    --cardDate: rgba(19, 42, 74, 0.65);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { height: 100%; margin: 0; }
+
+  body {
+    min-height: 100svh;
+    padding: max(16px, env(safe-area-inset-top))
+      max(16px, env(safe-area-inset-right))
+      max(16px, env(safe-area-inset-bottom))
+      max(16px, env(safe-area-inset-left));
+
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(900px 700px at 50% 25%, rgba(143, 191, 230, 0.1), transparent 55%),
+      radial-gradient(900px 700px at 20% 70%, rgba(202, 164, 75, 0.1), transparent 55%),
+      linear-gradient(180deg, var(--bg1), var(--bg2));
+    overflow: hidden;
+
+    color: #eaf2ff; /* body text (outside card) if needed */
+    font-family: ui-serif, Georgia, "Times New Roman", serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  canvas.confetti {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .card {
+    width: min(92vw, 560px);
+    border-radius: 24px;
+    padding: 34px 22px;
+
+    background: var(--card);
+    border: 1px solid var(--cardBorder);
+    box-shadow: 0 18px 60px var(--shadow);
+
+    /* IMPORTANT: keep the card crisp white */
+    backdrop-filter: none;
+
+    text-align: center;
+    position: relative;
+    z-index: 1;
+
+    /* IMPORTANT: make text navy inside card */
+    color: var(--cardText);
+  }
+
+  .card:before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border-radius: 18px;
+    border: 1px solid rgba(202, 164, 75, 0.35);
+    pointer-events: none;
+  }
+
+  .title {
+    font-family: ui-script, "Snell Roundhand", "Apple Chancery", cursive;
+    font-size: clamp(44px, 9vw, 66px);
+    line-height: 1;
+    margin: 0;
+    letter-spacing: 0.4px;
+    color: var(--cardText);
+  }
+
+  .sub {
+    margin: 10px 0 18px;
+    font-size: clamp(15px, 4.2vw, 18px);
+    color: var(--cardMuted);
+    font-style: italic;
+  }
+
+  .divider {
+    width: min(360px, 78%);
+    height: 2px;
+    margin: 18px auto 18px;
+    background: linear-gradient(90deg, transparent, rgba(202, 164, 75, 0.85), transparent);
+  }
+
+  .event {
+    margin: 0;
+    font-size: clamp(16px, 4.4vw, 22px);
+    letter-spacing: 0.6px;
+    color: var(--cardText);
+  }
+
+  .date {
+    margin: 10px 0 0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    font-size: clamp(12px, 3.4vw, 14px);
+    letter-spacing: 3px;
+    color: var(--cardDate);
+  }
+
+  .dot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+    opacity: 0.92;
+  }
+  .d1 { top: 16px; left: 18px; }
+  .d2 { top: 16px; right: 18px; }
+  .d3 { bottom: 16px; left: 18px; }
+  .d4 { bottom: 16px; right: 18px; }
+
+  @media (min-width: 768px) {
+    .card { padding: 46px 34px; border-radius: 28px; }
+    .card:before { inset: 12px; border-radius: 22px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    canvas.confetti { display: none; }
+  }
+</style>
+  </head>
+
+  <body>
+    <canvas class="confetti" id="confetti"></canvas>
+
+    <main class="card" role="main" aria-label="Thank you card">
+      <span class="dot d1"></span><span class="dot d2"></span
+      ><span class="dot d3"></span><span class="dot d4"></span>
+
+      <h1 class="title">Thank you</h1>
+      <p class="sub">for celebrating with us</p>
+      <div class="divider"></div>
+      <p class="event"><strong>Rohail’s Aqeeqah</strong></p>
+      <p class="date">01 • 24 • 2026</p>
+    </main>
+    <button id="soundBtn"
+  style="position:fixed;left:16px;bottom:16px;z-index:9999;
+  padding:12px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.25);
+  background:rgba(0,0,0,.55);color:#fff;font-weight:700;backdrop-filter:blur(8px);">
+  🔊 Tap for sound
+</button>
+
+<audio id="sparkleAudio" preload="auto" loop playsinline>
+  <source src="./fireworks.mp3" type="audio/mpeg">
+</audio>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script>
+      // Confetti colors tuned for dark theme (still your palette)
+      const COLORS = ["#8fbfe6", "#caa44b", "#eaf2ff", "#132a4a"];
+
+      const canvas = document.getElementById("confetti");
+      const confetti = window.confetti.create(canvas, {
+        resize: true,
+        useWorker: true,
+      });
+
+      // Styles
+      function softSprinkle(durationMs = 1200) {
+        const end = Date.now() + durationMs;
+        (function frame() {
+          confetti({
+            particleCount: 3,
+            startVelocity: 0,
+            ticks: 260,
+            gravity: 0.75,
+            drift: (Math.random() - 0.5) * 0.7,
+            origin: { x: Math.random(), y: -0.06 },
+            colors: COLORS,
+            scalar: 0.95,
+            shapes: ["square"],
+          });
+          if (Date.now() < end) requestAnimationFrame(frame);
+        })();
+      }
+
+      function streamers(durationMs = 900) {
+        const end = Date.now() + durationMs;
+        (function frame() {
+          confetti({
+            particleCount: 8,
+            angle: 90,
+            startVelocity: 13,
+            spread: 25,
+            ticks: 200,
+            gravity: 0.95,
+            origin: { x: Math.random(), y: -0.02 },
+            colors: COLORS,
+            scalar: 1.0,
+            shapes: ["circle", "square"],
+          });
+          if (Date.now() < end) requestAnimationFrame(frame);
+        })();
+      }
+
+      function sideCannons() {
+        confetti({
+          particleCount: 80,
+          angle: 60,
+          spread: 58,
+          startVelocity: 30,
+          ticks: 140,
+          origin: { x: 0.02, y: 0.78 },
+          colors: COLORS,
+          scalar: 1.0,
+        });
+        confetti({
+          particleCount: 80,
+          angle: 120,
+          spread: 58,
+          startVelocity: 30,
+          ticks: 140,
+          origin: { x: 0.98, y: 0.78 },
+          colors: COLORS,
+          scalar: 1.0,
+        });
+      }
+
+      function fireworks() {
+        const burst = (x, y, count) => {
+          confetti({
+            particleCount: count,
+            startVelocity: 38,
+            spread: 360,
+            ticks: 90,
+            origin: { x, y },
+            colors: COLORS,
+            scalar: 1.05,
+            shapes: ["circle", "square"],
+          });
+          // gold sparkle accent
+          confetti({
+            particleCount: Math.floor(count * 0.35),
+            startVelocity: 44,
+            spread: 70,
+            ticks: 100,
+            origin: { x, y },
+            colors: ["#caa44b", "#f6e3a1"],
+            scalar: 1.1,
+          });
+        };
+        burst(0.2, 0.45, 55);
+        burst(0.8, 0.45, 55);
+        burst(0.5, 0.25, 80);
+      }
+
+      // Infinite show with variety
+      const STYLES = [
+        () => softSprinkle(1400),
+        () => streamers(900),
+        () => sideCannons(),
+        () => fireworks(),
+        () => {
+          softSprinkle(900);
+          setTimeout(() => fireworks(), 450);
+        },
+      ];
+
+      const randInt = (min, max) =>
+        Math.floor(Math.random() * (max - min + 1)) + min;
+
+      function startInfiniteShow() {
+        // baseline gentle sprinkle
+        setInterval(() => softSprinkle(700), 650);
+
+        // rotate bigger moments forever
+        (function cycle() {
+          STYLES[randInt(0, STYLES.length - 1)]();
+          setTimeout(cycle, randInt(1600, 3200));
+        })();
+      }
+
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        startInfiniteShow();
+      }
+      const audio = document.getElementById("sparkleAudio");
+const btn = document.getElementById("soundBtn");
+
+let enabled = false;
+
+function fadeTo(target, ms = 700) {
+  const start = audio.volume;
+  const steps = 20;
+  let i = 0;
+  const timer = setInterval(() => {
+    i++;
+    const t = i / steps;
+    audio.volume = Math.max(0, Math.min(1, start + (target - start) * t));
+    if (i >= steps) clearInterval(timer);
+  }, ms / steps);
+}
+
+btn.addEventListener("click", async () => {
+  try {
+    // Make sure these are set inside the gesture
+    audio.muted = false;
+    audio.volume = 0.01;  // non-zero to avoid “silent play” weirdness
+    audio.currentTime = 0;
+
+    // Force-load on Safari/iOS
+    audio.load();
+
+    if (!enabled) {
+      await audio.play();       // must happen directly in click handler
+      fadeTo(0.22, 900);        // your soft sparkle level
+      enabled = true;
+      btn.textContent = "🔇 Sound off";
+    } else {
+      fadeTo(0, 450);
+      setTimeout(() => audio.pause(), 500);
+      enabled = false;
+      btn.textContent = "🔊 Tap for sound";
+    }
+  } catch (err) {
+    console.error("Audio play failed:", err);
+    btn.textContent = "⚠️ Audio blocked";
+    // Common causes: file not found, wrong MIME type, browser policy
+  }
+});
+    </script>
+  </body>
+</html>
